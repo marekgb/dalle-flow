@@ -18,6 +18,10 @@ executors:
     volumes:
       - $HOME/.cache:/root/.cache
       # - $HOME/.cache:/home/dalle/.cache
+    jcloud:
+      resources:
+        memory: 10G
+        gpu: shared
   - name: clip_encoder
     uses: jinahub+docker://CLIPTorchEncoder/latest
     host: 'demo-cas.jina.ai'
@@ -37,6 +41,10 @@ executors:
     volumes:
       - $HOME/.cache:/root/.cache
       # - $HOME/.cache:/home/dalle/.cache
+    jcloud:
+      resources:
+        memory: 10G
+        gpu: shared
   - name: rerank
     port_monitoring: 51009
     uses: jinahub+docker://CLIPTorchEncoder/latest
@@ -54,7 +62,14 @@ executors:
     replicas: 2
     # env:
     #   CUDA_VISIBLE_DEVICES: 0  # change this if you have multiple GPU
+    jcloud:
+      resources:
+        memory: 5G
+        gpu: shared
   - name: store
     uses: jinahub+docker://DalleStore
     port_monitoring: 51011
     replicas: 2
+    jcloud:
+      resources:
+        memory: 500M
